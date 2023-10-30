@@ -106,7 +106,7 @@ class Scanner:
                 self._advance()
 
         # Every number in pylox is a floating-point number.
-        value = float(self.source[self.start + 1: self.current])
+        value = float(self.source[self.start: self.current])
 
         self._add_token(TokenType.NUMBER, value)
 

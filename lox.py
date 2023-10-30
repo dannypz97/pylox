@@ -2,7 +2,9 @@ import logging
 import os
 import sys
 
+from ast_printer import AstPrinter
 from error import clear_error, had_error
+from parser import Parser
 from scanner import Scanner
 
 
@@ -29,8 +31,14 @@ def run(source):
     scanner = Scanner(source)
     tokens = scanner.scan_tokens()
 
-    for token in tokens:
-        pass
+    parser = Parser(tokens)
+    expr = parser.parse()
+
+    if had_error():
+        return
+
+    ast_printer = AstPrinter()
+    print(ast_printer.print(expr))
 
 
 if __name__ == '__main__':

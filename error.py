@@ -1,5 +1,14 @@
+from lox_token import Token
+from token_type import TokenType
+
 _had_error = False
 
+
+def error(token: Token, msg):
+    if token.ttype == TokenType.EOF:
+        report_error(token.line, msg, " at end")
+    else:
+        report_error(token.lexeme, msg, f"at {token.lexeme}")
 
 def report_error(line, msg, where=""):
     global _had_error
