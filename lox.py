@@ -4,6 +4,7 @@ import sys
 
 from ast_printer import AstPrinter
 from error import clear_error, had_error
+from interpreter import Interpreter
 from parser import Parser
 from scanner import Scanner
 
@@ -37,8 +38,12 @@ def run(source):
     if had_error():
         return
 
-    ast_printer = AstPrinter()
-    print(ast_printer.print(expr))
+    if os.environ.get('mode') == 'ast-print':
+        ast_printer = AstPrinter()
+        print(ast_printer.print(expr))
+    else:
+        interpreter = Interpreter()
+        print(interpreter.evaluate(expr))
 
 
 if __name__ == '__main__':

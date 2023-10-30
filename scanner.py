@@ -90,7 +90,7 @@ class Scanner:
         self._advance()
 
         # If pylox supported escape sequences, we'd need to unescape them here??
-        value = self.source[self.start + 1: self.current]
+        value = self.source[self.start + 1: self.current - 1]
         self._add_token(TokenType.STRING, value)
 
     def _number(self):
