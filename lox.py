@@ -3,7 +3,7 @@ import os
 import sys
 
 from ast_printer import AstPrinter
-from error import clear_error, had_error
+from error import clear_error, had_error, had_runtime_error
 from interpreter import Interpreter
 from parser import Parser
 from scanner import Scanner
@@ -35,7 +35,7 @@ def run(source):
     parser = Parser(tokens)
     expr = parser.parse()
 
-    if had_error():
+    if had_error() or had_runtime_error():
         return
 
     if os.environ.get('mode') == 'ast-print':
@@ -43,7 +43,7 @@ def run(source):
         print(ast_printer.print(expr))
     else:
         interpreter = Interpreter()
-        print(interpreter.evaluate(expr))
+        interpreter.interpret(expr)
 
 
 if __name__ == '__main__':
@@ -60,3 +60,5 @@ if __name__ == '__main__':
 
     if had_error():
         sys.exit(1)
+    if had_runtime_error():
+        sys.exit(2)
